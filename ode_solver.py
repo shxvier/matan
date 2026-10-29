@@ -61,9 +61,9 @@ def parse_ode(text):
     try:
         expr = parse_equation(text, NAMES)
     except ParseError as exc:
-        if "=" in str(exc):
-            raise
-        raise ParseError(f"не удалось разобрать «{original}»") from None
+        # Позиции в сообщении относятся к преобразованному тексту — оставляем только суть.
+        reason = str(exc).splitlines()[0]
+        raise ParseError(f"в уравнении «{original}»: {reason}") from None
     if not expr.has(P_SYM):
         raise ParseError("в уравнении нет производной (пишите y' или dy/dx)")
     check_symbols(expr.subs(P_SYM, 0))
