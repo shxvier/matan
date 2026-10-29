@@ -35,9 +35,15 @@ class ParseError(ValueError):
     pass
 
 
-def parse(text, extra_names=None):
-    """Разбирает выражение вида '2x + 3sin(x)', 'x^2', 'e^(3x)' в объект SymPy."""
-    text = text.strip().replace(",", ".")
+def parse(text, extra_names=None, decimal_comma=True):
+    """Разбирает выражение вида '2x + 3sin(x)', 'x^2', 'e^(3x)' в объект SymPy.
+
+    decimal_comma=True разрешает писать дроби через запятую (0,5); выключите,
+    если запятая нужна для разделения аргументов функций: diff(x^2, x).
+    """
+    text = text.strip()
+    if decimal_comma:
+        text = text.replace(",", ".")
     if not text:
         raise ParseError("пустое выражение")
     names = dict(BASE_NAMES)

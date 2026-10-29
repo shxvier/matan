@@ -96,7 +96,10 @@ def main():
     if len(sys.argv) > 1:
         run(sys.argv[1:])
         return
+    interactive()
 
+
+def interactive():
     print("=== Решатель линейных уравнений и систем ===")
     while True:
         lines = read_interactive()
